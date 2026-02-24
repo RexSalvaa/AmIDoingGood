@@ -1,48 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="prototype.amidoinggood.controller.DashboardController">
+<VBox prefWidth="550.0" prefHeight="900.0" spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prototype.amidoinggood.controller.DashboardController">
+    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
 
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+    <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #f4f4f4; -fx-padding: 15; -fx-background-radius: 10;">
+        <ImageView fx:id="avatarView" fitHeight="110.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true" />
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="Mes Statistiques" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+            <VBox spacing="2">
+                <Label text="Santé" style="-fx-font-size: 11px; -fx-font-weight: bold;"/>
+                <ProgressBar fx:id="healthBar" prefWidth="300.0" prefHeight="20.0" progress="0.5" />
+            </VBox>
+            <VBox spacing="2">
+                <Label text="Intellect" style="-fx-font-size: 11px; -fx-font-weight: bold;"/>
+                <ProgressBar fx:id="intellectBar" prefWidth="300.0" prefHeight="20.0" progress="0.5" />
+            </VBox>
+            <VBox spacing="2">
+                <Label text="Dopamine" style="-fx-font-size: 11px; -fx-font-weight: bold;"/>
+                <ProgressBar fx:id="dopamineBar" prefWidth="300.0" prefHeight="20.0" progress="0.5" />
+            </VBox>
+        </VBox>
+    </HBox>
 
-    <Label text="Am I Doing Good?">
-        <font>
-            <Font name="System Bold" size="24.0"/>
-        </font>
+    <Label text="Daily Tracker &amp; Data Harvest">
+        <font><Font name="System Bold" size="20.0"/></font>
     </Label>
+    <Separator/>
 
-    <ImageView fx:id="avatarView" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+        <VBox spacing="10">
+            <TitledPane text="🎨 Customiser mon Avatar" expanded="false" style="-fx-font-weight: bold;">
+                <VBox spacing="10">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Peau:" prefWidth="60"/>
+                        <ChoiceBox fx:id="skinChoice" prefWidth="120"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Coupe:" prefWidth="60"/>
+                        <ChoiceBox fx:id="topChoice" prefWidth="120"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Couleur:" prefWidth="60"/>
+                        <ChoiceBox fx:id="hairColorChoice" prefWidth="120"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Habit:" prefWidth="60"/>
+                        <ChoiceBox fx:id="clothingChoice" prefWidth="120"/>
+                    </HBox>
+                </VBox>
+            </TitledPane>
+            <TitledPane text="Diet" expanded="true">
+                <VBox spacing="10">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Breakfast:" prefWidth="80"/>
+                        <ChoiceBox fx:id="breakfastChoice" prefWidth="150"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Meal 1:" prefWidth="80"/>
+                        <ChoiceBox fx:id="meal1Choice" prefWidth="150"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Meal 2:" prefWidth="80"/>
+                        <ChoiceBox fx:id="meal2Choice" prefWidth="150"/>
+                    </HBox>
+                    <VBox spacing="5">
+                        <Label text="Any extras? (How bad: 0 to 4)"/>
+                        <Slider fx:id="extrasSlider" min="0" max="4" majorTickUnit="1" minorTickCount="0" showTickLabels="true" snapToTicks="true"/>
+                        <Label fx:id="extrasLabel" text="0" textFill="#7f8c8d" style="-fx-font-style: italic;"/>
+                    </VBox>
+                </VBox>
+            </TitledPane>
 
-    <VBox spacing="5.0" alignment="CENTER_LEFT">
-        <Label text="Santé Physique" />
-        <ProgressBar fx:id="healthBar" prefWidth="300.0" progress="0.5" style="-fx-accent: #e74c3c;" />
+            <TitledPane text="Self Improvement" expanded="false">
+                <VBox spacing="10">
+                    <CheckBox fx:id="sportCheck" text="Sport Done?"/>
+                    <VBox>
+                        <Label text="Reading Time (0-12h)"/>
+                        <Slider fx:id="readSlider" min="0" max="12" showTickLabels="true"/>
+                        <Label fx:id="readLabel" text="0.0h" textFill="#27ae60" style="-fx-font-style: italic;"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Smart Hobbies (0-12h)"/>
+                        <Slider fx:id="hobbiesSlider" min="0" max="12" showTickLabels="true"/>
+                        <Label fx:id="hobbiesLabel" text="0.0h" textFill="#27ae60" style="-fx-font-style: italic;"/>
+                    </VBox>
+                </VBox>
+            </TitledPane>
 
-        <Label text="Intellect" />
-        <ProgressBar fx:id="intellectBar" prefWidth="300.0" progress="0.5" style="-fx-accent: #3498db;" />
+            <TitledPane text="Professional &amp; Academic" expanded="false">
+                <VBox spacing="10">
+                    <VBox>
+                        <Label text="Time spent studying (hours)"/>
+                        <Slider fx:id="studySlider" min="0" max="12" showTickLabels="true"/>
+                        <Label fx:id="studyLabel" text="0.0h" textFill="#2980b9" style="-fx-font-style: italic;"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Personal Projects (hours)"/>
+                        <Slider fx:id="projectSlider" min="0" max="12" showTickLabels="true"/>
+                        <Label fx:id="projectLabel" text="0.0h" textFill="#2980b9" style="-fx-font-style: italic;"/>
+                    </VBox>
+                </VBox>
+            </TitledPane>
 
-        <Label text="Dopamine" />
-        <ProgressBar fx:id="dopamineBar" prefWidth="300.0" progress="0.5" style="-fx-accent: #f1c40f;" />
-    </VBox>
+            <TitledPane text="Social &amp; Relationship" expanded="false">
+                <VBox spacing="10">
+                    <CheckBox fx:id="friendsCheck" text="Saw Friends?"/>
+                    <CheckBox fx:id="funCheck" text="Had Fun?"/>
+                    <CheckBox fx:id="newPeopleCheck" text="Met New People?"/>
+                    <Separator/>
+                    <CheckBox fx:id="gfCheck" text="Have a Girlfriend?"/>
+                    <CheckBox fx:id="laidCheck" text="Got Laid?"/>
+                </VBox>
+            </TitledPane>
 
-    <HBox spacing="10.0" alignment="CENTER">
-        <Button text="🍔 Manger Gras" onAction="#onEatBurger" style="-fx-background-color: #e67e22; -fx-text-fill: white;"/>
-        <Button text="🥗 Manger Sain" onAction="#onEatSalad" style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
-    </HBox>
+            <TitledPane text="Self Destroying" expanded="false" style="-fx-text-fill: red;">
+                <VBox spacing="10">
+                    <VBox>
+                        <Label text="Scrolled? (1-12h)"/>
+                        <Slider fx:id="scrollSlider" min="0" max="12" showTickLabels="true"/>
+                        <Label fx:id="scrollLabel" text="1.0h" textFill="#c0392b" style="-fx-font-style: italic;"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Got Wasted? (Intensity 1-10)"/>
+                        <Slider fx:id="wastedSlider" min="0" max="10" showTickLabels="true" snapToTicks="true"/>
+                        <Label fx:id="wastedLabel" text="Level: 1" textFill="#c0392b" style="-fx-font-style: italic;"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Video Games? (1-12h)"/>
+                        <Slider fx:id="gamesSlider" min="0" max="12" showTickLabels="true"/>
+                        <Label fx:id="gamesLabel" text="1.0h" textFill="#c0392b" style="-fx-font-style: italic;"/>
+                    </VBox>
+                </VBox>
+            </TitledPane>
 
-    <HBox spacing="10.0" alignment="CENTER">
-        <Button text="💻 Coder Java" onAction="#onCodeJava" style="-fx-background-color: #34495e; -fx-text-fill: white;"/>
-        <Button text="📱 TikTok" onAction="#onScrollTiktok" style="-fx-background-color: #e84393; -fx-text-fill: white;"/>
-    </HBox>
+            <VBox spacing="10" style="-fx-background-color: #f0f8ff; -fx-padding: 10; -fx-background-radius: 5;">
+                <Label text="How Happy Do I Feel Today? (1-10)" style="-fx-font-weight: bold;"/>
+                <Slider fx:id="happinessSlider" min="1" max="10" majorTickUnit="1" showTickLabels="true" snapToTicks="true"/>
+                <Label fx:id="happinessLabel" text="Mood: 1/10" textFill="#8e44ad" style="-fx-font-style: italic; -fx-font-weight: bold;"/>
+            </VBox>
+        </VBox>
+    </ScrollPane>
 
+    <Button text="FINISH DAY &amp; SAVE DATA" onAction="#onValidateDay" maxWidth="Infinity" prefHeight="40.0" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-weight: bold;"/>
 </VBox>

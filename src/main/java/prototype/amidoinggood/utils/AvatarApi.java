@@ -1,29 +1,46 @@
-package prototype.amidoinggood.utils; // Vérifie ton package !
+package prototype.amidoinggood.utils;
 
 import prototype.amidoinggood.model.Avatar;
 
 public class AvatarApi {
 
-    // On utilise le style "Pixel Art" de DiceBear (c'est léger et retro)
-    private static final String BASE_URL = "https://api.dicebear.com/9.x/pixel-art/png";
+    private static final String BASE_URL = "https://api.dicebear.com/9.x/avataaars/png";
+
+    // Change ce mot pour changer totalement de personnage de base !
+    // Essaie "Alex", "Felix", "Jack" jusqu'à trouver un avatar qui te ressemble.
+    private static final String SEED = "Rex";
 
     public static String getAvatarUrl(Avatar avatar) {
-        String seed = "Rex"; // Ton identité unique
-        String mouth = "happy";
-        String eyes = "normal";
+        // 1. On récupère le style choisi par l'utilisateur
+        String skinColor = avatar.getSkinColor();
+        String top = avatar.getTop();
+        String hairColor = avatar.getHairColor();
+        String clothing = avatar.getClothing();
 
-        // Logique visuelle simple (Tu pourras la complexifier)
-        if (avatar.getHealth() < 30) {
-            mouth = "puke"; // Malade
-            eyes = "dead";
-        } else if (avatar.getDopamine() < 40) {
+        // 2. Expressions par défaut
+        String mouth = "default";
+        String eyes = "default";
+
+        double h = avatar.getHealth();
+        double d = avatar.getDopamine();
+
+        // 3. Logique d'expression (Priorité à la santé puis dopamine)
+        if (h <= 40) {
+            eyes = "xDizzy";
+            mouth = (d <= 30) ? "screamOpen" : "serious";
+        } else if (h >= 80 && d >= 70) {
+            eyes = "hearts";
+            mouth = "smile";
+        } else if (d >= 70) {
+            mouth = "smile";
+            eyes = "happy";
+        } else if (d <= 30) {
             mouth = "sad";
-            eyes = "sad";
-        } else if (avatar.getIntellect() > 80) {
-            eyes = "sunglasses"; // Trop cool
+            eyes = "cry";
         }
 
-        // Construction de l'URL
-        return BASE_URL + "?seed=" + seed + "&mouth=" + mouth + "&eyes=" + eyes;
+        // 4. On crée l'URL avec TOUS les paramètres
+        return String.format("https://api.dicebear.com/9.x/avataaars/png?seed=Rex&mouth=%s&eyes=%s&skinColor=%s&top=%s&hairColor=%s&clothing=%s&backgroundColor=b6e3f4",
+                mouth, eyes, skinColor, top, hairColor, clothing);
     }
 }

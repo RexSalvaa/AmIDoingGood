@@ -1,35 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>AmIDoingGood</artifactId>
-    <version>1.0-SNAPSHOT</version>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    <dependencies>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>17.0.6</version> </dependency>
+<VBox prefWidth="550.0" prefHeight="900.0" spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prototype.amidoinggood.controller.DashboardController">
+    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
 
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>17.0.6</version>
-        </dependency>
+    <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: #f4f4f4; -fx-padding: 15; -fx-background-radius: 15;">
+        <ImageView fx:id="avatarView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
 
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>4.12.0</version>
-        </dependency>
-    </dependencies>
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="Mes Statistiques" style="-fx-font-weight: bold; -fx-font-size: 16px;" />
 
-</project>
+            <VBox spacing="4">
+                <Label text="Santé" style="-fx-font-weight: bold; -fx-font-size: 11px;"/>
+                <ProgressBar fx:id="healthBar" prefWidth="300.0" prefHeight="25.0" progress="0.5" />
+            </VBox>
+
+            <VBox spacing="4">
+                <Label text="Intellect" style="-fx-font-weight: bold; -fx-font-size: 11px;"/>
+                <ProgressBar fx:id="intellectBar" prefWidth="300.0" prefHeight="25.0" progress="0.5" />
+            </VBox>
+
+            <VBox spacing="4">
+                <Label text="Dopamine" style="-fx-font-weight: bold; -fx-font-size: 11px;"/>
+                <ProgressBar fx:id="dopamineBar" prefWidth="300.0" prefHeight="25.0" progress="0.5" />
+            </VBox>
+        </VBox>
+    </HBox>
+
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+        <VBox spacing="15">
+            <TitledPane text="Professional &amp; Academic" expanded="true">
+                <VBox spacing="15">
+                    <VBox spacing="5">
+                        <Label text="Time spent studying (hours)" style="-fx-font-weight: bold;"/>
+                        <Slider fx:id="studySlider" min="0" max="12" majorTickUnit="2" showTickLabels="true" snapToTicks="false"/>
+                        <Label fx:id="studyValueLabel" text="0.0 hours" textFill="#3498db">
+                            <font><Font name="System Italic" size="12.0"/></font>
+                        </Label>
+                    </VBox>
+
+                    <VBox spacing="5">
+                        <Label text="Personal Projects (hours)" style="-fx-font-weight: bold;"/>
+                        <Slider fx:id="projectSlider" min="0" max="12" majorTickUnit="2" showTickLabels="true"/>
+                        <Label fx:id="projectValueLabel" text="0.0 hours" textFill="#3498db" />
+                    </VBox>
+                </VBox>
+            </TitledPane>
+
+            <TitledPane text="Self Destroying" style="-fx-text-fill: red;">
+                <VBox spacing="15">
+                    <VBox spacing="5">
+                        <Label text="Scrolled? (1-12h)"/>
+                        <Slider fx:id="scrollSlider" min="1" max="12" showTickLabels="true"/>
+                        <Label fx:id="scrollValueLabel" text="1.0 hours" textFill="#e74c3c" />
+                    </VBox>
+                </VBox>
+            </TitledPane>
+        </VBox>
+    </ScrollPane>
+
+    <Button text="FINISH DAY &amp; SAVE DATA" onAction="#onValidateDay" maxWidth="Infinity" prefHeight="40" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+</VBox>
