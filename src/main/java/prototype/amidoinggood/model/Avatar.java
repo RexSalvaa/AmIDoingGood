@@ -5,6 +5,11 @@ public class Avatar {
     private double intellect;
     private double dopamine;
 
+    private double exercise = 50.0;
+    private double sleepManagement = 50.0;
+    private double social = 50.0;
+    private double duty = 50.0;
+
     // --- VARIABLES DE STYLE (Codes Hex de la v9) ---
     private String skinColor = "edb98a";  // Correspond à "light"
     private String top = "shortFlat";
@@ -14,6 +19,7 @@ public class Avatar {
         this.health = 50.0;
         this.intellect = 50.0;
         this.dopamine = 50.0;
+
     }
 
     // --- NOUVELLES MÉTHODES DE MODIFICATION ---
@@ -32,6 +38,16 @@ public class Avatar {
         this.dopamine += value;
         clampStats();
     }
+
+    public double getExercise() { return exercise; }
+    public double getSleepManagement() { return sleepManagement; }
+    public double getSocial() { return social; }
+    public double getDuty() { return duty; }
+
+    public void addExercise(double amount) { this.exercise = Math.max(0, Math.min(100, this.exercise + amount)); }
+    public void addSleepManagement(double amount) { this.sleepManagement = Math.max(0, Math.min(100, this.sleepManagement + amount)); }
+    public void addSocial(double amount) { this.social = Math.max(0, Math.min(100, this.social + amount)); }
+    public void addDuty(double amount) { this.duty = Math.max(0, Math.min(100, this.duty + amount)); }
 
     public String getSkinColor() { return skinColor; }
     public void setSkinColor(String skinColor) { this.skinColor = skinColor; }

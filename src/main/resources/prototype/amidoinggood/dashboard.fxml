@@ -9,23 +9,21 @@
 <VBox prefWidth="550.0" prefHeight="900.0" spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prototype.amidoinggood.controller.DashboardController">
     <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
 
-    <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #f4f4f4; -fx-padding: 15; -fx-background-radius: 10;">
+    <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #f4f4f4; -fx-padding: 15; -fx-background-radius: 10;" VBox.vgrow="NEVER">
         <ImageView fx:id="avatarView" fitHeight="110.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true" />
-        <VBox spacing="10" HBox.hgrow="ALWAYS">
-            <Label text="Mes Statistiques" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
-            <VBox spacing="2">
-                <Label text="Santé" style="-fx-font-size: 11px; -fx-font-weight: bold;"/>
-                <ProgressBar fx:id="healthBar" prefWidth="300.0" prefHeight="20.0" progress="0.5" />
+        <ScrollPane fitToWidth="true" fitToHeight="true" HBox.hgrow="ALWAYS" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+            <VBox spacing="5">
+                <Label text="My Statistics" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+
+                <VBox spacing="0"><Label text="Health" style="-fx-font-size: 10px;"/><ProgressBar fx:id="healthBar" prefWidth="300.0" prefHeight="15.0" minHeight="15.0" progress="0.5" /></VBox>
+                <VBox spacing="0"><Label text="Intellect" style="-fx-font-size: 10px;"/><ProgressBar fx:id="intellectBar" prefWidth="300.0" prefHeight="15.0" minHeight="15.0" progress="0.5" /></VBox>
+                <VBox spacing="0"><Label text="Dopamine" style="-fx-font-size: 10px;"/><ProgressBar fx:id="dopamineBar" prefWidth="300.0" prefHeight="15.0" minHeight="15.0" progress="0.5" /></VBox>
+                <VBox spacing="0"><Label text="Exercise" style="-fx-font-size: 10px;"/><ProgressBar fx:id="exerciseBar" prefWidth="300.0" prefHeight="15.0" minHeight="15.0" progress="0.5" /></VBox>
+                <VBox spacing="0"><Label text="Sleep Management" style="-fx-font-size: 10px;"/><ProgressBar fx:id="sleepBar" prefWidth="300.0" prefHeight="15.0" minHeight="15.0" progress="0.5" /></VBox>
+                <VBox spacing="0"><Label text="Social" style="-fx-font-size: 10px;"/><ProgressBar fx:id="socialBar" prefWidth="300.0" prefHeight="15.0" minHeight="15.0" progress="0.5" /></VBox>
+                <VBox spacing="0"><Label text="Duty" style="-fx-font-size: 10px;"/><ProgressBar fx:id="dutyBar" prefWidth="300.0" prefHeight="15.0" minHeight="15.0" progress="0.5" /></VBox>
             </VBox>
-            <VBox spacing="2">
-                <Label text="Intellect" style="-fx-font-size: 11px; -fx-font-weight: bold;"/>
-                <ProgressBar fx:id="intellectBar" prefWidth="300.0" prefHeight="20.0" progress="0.5" />
-            </VBox>
-            <VBox spacing="2">
-                <Label text="Dopamine" style="-fx-font-size: 11px; -fx-font-weight: bold;"/>
-                <ProgressBar fx:id="dopamineBar" prefWidth="300.0" prefHeight="20.0" progress="0.5" />
-            </VBox>
-        </VBox>
+        </ScrollPane>
     </HBox>
 
     <Label text="Daily Tracker &amp; Data Harvest">
@@ -35,40 +33,33 @@
 
     <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
         <VBox spacing="10">
-            <TitledPane text="🎨 Customiser mon Avatar" expanded="false" style="-fx-font-weight: bold;">
+            <TitledPane text="🎨 Customize My Avatar" expanded="false" style="-fx-font-weight: bold;">
                 <VBox spacing="10">
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Peau:" prefWidth="60"/>
-                        <ChoiceBox fx:id="skinChoice" prefWidth="120"/>
-                    </HBox>
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Coupe:" prefWidth="60"/>
-                        <ChoiceBox fx:id="topChoice" prefWidth="120"/>
-                    </HBox>
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Couleur:" prefWidth="60"/>
-                        <ChoiceBox fx:id="hairColorChoice" prefWidth="120"/>
-                    </HBox>
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Habit:" prefWidth="60"/>
-                        <ChoiceBox fx:id="clothingChoice" prefWidth="120"/>
-                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT"><Label text="Skin:" prefWidth="60"/><ChoiceBox fx:id="skinChoice" prefWidth="120"/></HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT"><Label text="Hair:" prefWidth="60"/><ChoiceBox fx:id="topChoice" prefWidth="120"/></HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT"><Label text="Color:" prefWidth="60"/><ChoiceBox fx:id="hairColorChoice" prefWidth="120"/></HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT"><Label text="Outfit:" prefWidth="60"/><ChoiceBox fx:id="clothingChoice" prefWidth="120"/></HBox>
                 </VBox>
             </TitledPane>
-            <TitledPane text="Diet" expanded="true">
+
+            <TitledPane text="Health &amp; Sleep" expanded="true">
                 <VBox spacing="10">
                     <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Breakfast:" prefWidth="80"/>
-                        <ChoiceBox fx:id="breakfastChoice" prefWidth="150"/>
+                        <Label text="Bedtime:" prefWidth="60"/>
+                        <TextField fx:id="sleepTimeField" promptText="23:30" prefWidth="70"/>
+                        <Label text="Wake up:" prefWidth="60"/>
+                        <TextField fx:id="wakeTimeField" promptText="07:30" prefWidth="70"/>
                     </HBox>
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Meal 1:" prefWidth="80"/>
-                        <ChoiceBox fx:id="meal1Choice" prefWidth="150"/>
-                    </HBox>
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Meal 2:" prefWidth="80"/>
-                        <ChoiceBox fx:id="meal2Choice" prefWidth="150"/>
-                    </HBox>
+
+                    <VBox spacing="5">
+                        <Label text="Total Hours of Sleep (0-12h)"/>
+                        <Slider fx:id="sleepSlider" min="0" max="12" majorTickUnit="1" showTickLabels="true" snapToTicks="true"/>
+                        <Label fx:id="sleepLabel" text="8.0h" textFill="#8e44ad" style="-fx-font-style: italic;"/>
+                    </VBox>
+                    <Separator/>
+                    <HBox spacing="10" alignment="CENTER_LEFT"><Label text="Breakfast:" prefWidth="80"/><ChoiceBox fx:id="breakfastChoice" prefWidth="150"/></HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT"><Label text="Meal 1:" prefWidth="80"/><ChoiceBox fx:id="meal1Choice" prefWidth="150"/></HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT"><Label text="Meal 2:" prefWidth="80"/><ChoiceBox fx:id="meal2Choice" prefWidth="150"/></HBox>
                     <VBox spacing="5">
                         <Label text="Any extras? (How bad: 0 to 4)"/>
                         <Slider fx:id="extrasSlider" min="0" max="4" majorTickUnit="1" minorTickCount="0" showTickLabels="true" snapToTicks="true"/>
@@ -139,6 +130,12 @@
                 </VBox>
             </TitledPane>
 
+            <VBox spacing="10" style="-fx-background-color: #e8f8f5; -fx-padding: 10; -fx-background-radius: 5;">
+                <Label text="How much did I achieve today of what I wanted? (%)" style="-fx-font-weight: bold;"/>
+                <Slider fx:id="achievementSlider" min="0" max="100" majorTickUnit="10" showTickLabels="true" snapToTicks="true"/>
+                <Label fx:id="achievementLabel" text="Achieved: 50%" textFill="#16a085" style="-fx-font-style: italic; -fx-font-weight: bold;"/>
+            </VBox>
+
             <VBox spacing="10" style="-fx-background-color: #f0f8ff; -fx-padding: 10; -fx-background-radius: 5;">
                 <Label text="How Happy Do I Feel Today? (1-10)" style="-fx-font-weight: bold;"/>
                 <Slider fx:id="happinessSlider" min="1" max="10" majorTickUnit="1" showTickLabels="true" snapToTicks="true"/>
@@ -146,6 +143,8 @@
             </VBox>
         </VBox>
     </ScrollPane>
-
-    <Button text="FINISH DAY &amp; SAVE DATA" onAction="#onValidateDay" maxWidth="Infinity" prefHeight="40.0" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    <HBox spacing="10">
+        <Button text="OPEN EXCEL HISTORY" onAction="#onOpenHistory" prefHeight="40.0" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+        <Button text="FINISH DAY &amp; SAVE DATA" onAction="#onValidateDay" prefHeight="40.0" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-weight: bold;" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+    </HBox>
 </VBox>

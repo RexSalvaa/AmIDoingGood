@@ -1,1 +1,1 @@
-0.0;50.0;100.0;ffdbb4;shortWaved;b58143;blazerAndSweater
+100.0;50.0;100.0;ae5d29;hijab;4a3123;shirtCrewNeck
