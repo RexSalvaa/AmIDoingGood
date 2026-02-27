@@ -2,6 +2,7 @@ package prototype.amidoinggood.controller;
 
 import javafx.scene.control.*;
 import prototype.amidoinggood.model.Avatar;
+import prototype.amidoinggood.model.DailyDraft;
 import prototype.amidoinggood.utils.AvatarApi;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -11,7 +12,7 @@ import prototype.amidoinggood.utils.SaveManager;
 
 public class DashboardController {
 
-    // --- LIENS FXML ---
+
     @FXML private ImageView avatarView;
 
     // Les 7 Barres de stats
@@ -23,9 +24,9 @@ public class DashboardController {
     @FXML private ProgressBar socialBar;
     @FXML private ProgressBar dutyBar;
 
-    // Health & Sleep
-    @FXML private TextField sleepTimeField;  // NEW
-    @FXML private TextField wakeTimeField;   // NEW
+
+    @FXML private TextField sleepTimeField;
+    @FXML private TextField wakeTimeField;
     @FXML private Slider sleepSlider;
     @FXML private Label sleepLabel;
     @FXML private ChoiceBox<String> breakfastChoice;
@@ -34,27 +35,27 @@ public class DashboardController {
     @FXML private Slider extrasSlider;
     @FXML private Label extrasLabel;
 
-    // Self Improvement
+
     @FXML private CheckBox sportCheck;
     @FXML private Slider readSlider;
     @FXML private Label readLabel;
     @FXML private Slider hobbiesSlider;
     @FXML private Label hobbiesLabel;
 
-    // Professional
+
     @FXML private Slider studySlider;
     @FXML private Label studyLabel;
     @FXML private Slider projectSlider;
     @FXML private Label projectLabel;
 
-    // Social & Relationship
+
     @FXML private CheckBox friendsCheck;
     @FXML private CheckBox funCheck;
     @FXML private CheckBox newPeopleCheck;
     @FXML private CheckBox gfCheck;
     @FXML private CheckBox laidCheck;
 
-    // Self Destroying
+
     @FXML private Slider scrollSlider;
     @FXML private Label scrollLabel;
     @FXML private Slider wastedSlider;
@@ -62,17 +63,16 @@ public class DashboardController {
     @FXML private Slider gamesSlider;
     @FXML private Label gamesLabel;
 
-    // End of Day Reviews
-    @FXML private Slider achievementSlider;  // NEW
-    @FXML private Label achievementLabel;    // NEW
+    @FXML private Slider achievementSlider;
+    @FXML private Label achievementLabel;
     @FXML private Slider happinessSlider;
     @FXML private Label happinessLabel;
 
-    // Avatar Customization
     @FXML private ChoiceBox<String> skinChoice;
     @FXML private ChoiceBox<String> topChoice;
     @FXML private ChoiceBox<String> hairColorChoice;
     @FXML private ChoiceBox<String> clothingChoice;
+    @FXML private Label statusLabel;
 
     private Avatar myAvatar;
 
@@ -82,7 +82,6 @@ public class DashboardController {
             this.myAvatar = new Avatar();
         }
 
-        // --- STUDIO D'AVATAR ---
         skinChoice.getItems().addAll("ffdbb4", "edb98a", "d08b5b", "ae5d29", "614335");
         topChoice.getItems().addAll("bob", "shortFlat", "shortWaved", "theCaesar", "hijab", "turban", "winterHat01");
         hairColorChoice.getItems().addAll("2c1b18", "4a3123", "b58143", "a55728", "d5d5d5");
@@ -98,12 +97,10 @@ public class DashboardController {
         hairColorChoice.valueProperty().addListener((obs, oldV, newV) -> { myAvatar.setHairColor(newV); updateView(); SaveManager.save(myAvatar); });
         clothingChoice.valueProperty().addListener((obs, oldV, newV) -> { myAvatar.setClothing(newV); updateView(); SaveManager.save(myAvatar); });
 
-        // --- CHOIX DIET ---
         String[] options = {"Healthy", "Neutral", "Junk"};
         breakfastChoice.getItems().addAll(options); meal1Choice.getItems().addAll(options); meal2Choice.getItems().addAll(options);
         breakfastChoice.setValue("Neutral"); meal1Choice.setValue("Neutral"); meal2Choice.setValue("Neutral");
 
-        // --- SETUP LABELS DES SLIDERS ---
         setupSliderLabel(sleepSlider, sleepLabel, "h");
         sleepSlider.setValue(8.0);
 
@@ -118,10 +115,38 @@ public class DashboardController {
         wastedSlider.valueProperty().addListener((obs, oldV, newV) -> wastedLabel.setText("Level: " + newV.intValue()));
         happinessSlider.valueProperty().addListener((obs, oldV, newV) -> happinessLabel.setText("Mood: " + newV.intValue() + "/10"));
 
-        // NEW: Achievement Label Listener
         achievementSlider.setValue(50);
         achievementSlider.valueProperty().addListener((obs, oldV, newV) ->
                 achievementLabel.setText("Achieved: " + newV.intValue() + "%"));
+
+        prototype.amidoinggood.model.DailyDraft savedDraft = prototype.amidoinggood.utils.DraftManager.loadDraft();
+        if (savedDraft != null) {
+            breakfastChoice.setValue(savedDraft.breakfast);
+            meal1Choice.setValue(savedDraft.meal1);
+            meal2Choice.setValue(savedDraft.meal2);
+            extrasSlider.setValue(savedDraft.extras);
+
+            sportCheck.setSelected(savedDraft.sport);
+            sleepSlider.setValue(savedDraft.sleepHours);
+
+            readSlider.setValue(savedDraft.read);
+            hobbiesSlider.setValue(savedDraft.hobbies);
+            studySlider.setValue(savedDraft.study);
+            projectSlider.setValue(savedDraft.project);
+            achievementSlider.setValue(savedDraft.achievement);
+
+            friendsCheck.setSelected(savedDraft.friends);
+            funCheck.setSelected(savedDraft.fun);
+            newPeopleCheck.setSelected(savedDraft.newPeople);
+            gfCheck.setSelected(savedDraft.gf);
+            laidCheck.setSelected(savedDraft.laid);
+
+            scrollSlider.setValue(savedDraft.scroll);
+            wastedSlider.setValue(savedDraft.wasted);
+            gamesSlider.setValue(savedDraft.games);
+
+            statusLabel.setText("Draft loaded from earlier today.");
+        }
 
         updateView();
     }
@@ -134,7 +159,6 @@ public class DashboardController {
 
     @FXML
     protected void onValidateDay() {
-        // --- 1. AVATAR IMPACT LOGIC ---
         applyDietImpact(breakfastChoice.getValue());
         applyDietImpact(meal1Choice.getValue());
         applyDietImpact(meal2Choice.getValue());
@@ -165,7 +189,6 @@ public class DashboardController {
         myAvatar.addDopamine(gamesSlider.getValue() * -1.5);
         myAvatar.addDuty(gamesSlider.getValue() * -1.5);
 
-        // --- 2. LOG DATA TO EXCEL/CSV ---
         DataLogger.logFullDay(
                 breakfastChoice.getValue(), meal1Choice.getValue(), meal2Choice.getValue(), extrasSlider.getValue(),
                 sportCheck.isSelected(), readSlider.getValue(), hobbiesSlider.getValue(),
@@ -174,24 +197,23 @@ public class DashboardController {
                 scrollSlider.getValue(), wastedSlider.getValue(), gamesSlider.getValue(),
                 sleepTimeField.getText(), wakeTimeField.getText(), sleepSlider.getValue(),
                 achievementSlider.getValue(), happinessSlider.getValue(),
-                myAvatar // Pass the avatar so we can log the final stats!
+                myAvatar
         );
 
-        // --- 3. SAVE AND UPDATE UI ---
         SaveManager.save(myAvatar);
         updateView();
 
-        // Show a quick popup to confirm it worked
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Day Saved Successfully!");
         alert.setHeaderText(null);
         alert.show();
+        prototype.amidoinggood.utils.DraftManager.clearDraft();
+        statusLabel.setText("");
     }
     @FXML
     protected void onOpenHistory() {
         try {
             java.io.File file = new java.io.File("daily_tracker_history.csv");
             if (file.exists()) {
-                // This command tells Windows/Mac to open the file with its default program (usually Excel)
                 java.awt.Desktop.getDesktop().open(file);
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "No history found. Finish a day first!");
@@ -202,6 +224,39 @@ public class DashboardController {
             System.err.println("Could not open file: " + e.getMessage());
         }
     }
+    @FXML
+    protected void onSaveDraft() {
+        DailyDraft draft = new DailyDraft();
+
+        draft.breakfast = breakfastChoice.getValue() != null ? breakfastChoice.getValue() : "Neutral";
+        draft.meal1 = meal1Choice.getValue() != null ? meal1Choice.getValue() : "Neutral";
+        draft.meal2 = meal2Choice.getValue() != null ? meal2Choice.getValue() : "Neutral";
+        draft.extras = extrasSlider.getValue();
+
+        draft.sport = sportCheck.isSelected();
+        draft.sleepHours = sleepSlider.getValue();
+
+        draft.read = readSlider.getValue();
+        draft.hobbies = hobbiesSlider.getValue();
+        draft.study = studySlider.getValue();
+        draft.project = projectSlider.getValue();
+        draft.achievement = achievementSlider.getValue();
+
+        draft.friends = friendsCheck.isSelected();
+        draft.fun = funCheck.isSelected();
+        draft.newPeople = newPeopleCheck.isSelected();
+        draft.gf = gfCheck.isSelected();
+        draft.laid = laidCheck.isSelected();
+
+        draft.scroll = scrollSlider.getValue();
+        draft.wasted = wastedSlider.getValue();
+        draft.games = gamesSlider.getValue();
+
+        prototype.amidoinggood.utils.DraftManager.saveDraft(draft);
+
+        String currentTime = java.time.LocalTime.now().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
+        statusLabel.setText("Draft pre-saved safely at " + currentTime + "!");
+    }
 
     private void applyDietImpact(String quality) {
         switch (quality) {
@@ -210,7 +265,6 @@ public class DashboardController {
         }
     }
 
-    // --- MÉTHODES DE MISE À JOUR VISUELLE ---
     private void updateView() {
         String avatarUrl = AvatarApi.getAvatarUrl(myAvatar);
 
@@ -223,7 +277,6 @@ public class DashboardController {
             System.err.println("❌ Erreur de téléchargement : " + e.getMessage());
         }
 
-        // --- MISE À JOUR DES 7 BARRES ---
         healthBar.setProgress(myAvatar.getHealth() / 100.0);
         intellectBar.setProgress(myAvatar.getIntellect() / 100.0);
         dopamineBar.setProgress(myAvatar.getDopamine() / 100.0);
